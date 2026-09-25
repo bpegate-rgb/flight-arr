@@ -201,8 +201,8 @@
     <div class="filter-card">
       <div class="filter-group" style="flex: 0 0 auto;">
         <label>顯示範圍</label>
-        <button id="toggle-8h-btn" class="btn-toggle active" onclick="toggleEightHourFilter()">
-          ⏱️ 僅顯示 8 小時內航班
+        <button id="toggle-2h-btn" class="btn-toggle active" onclick="toggleEightHourFilter()">
+          ⏱️ 僅顯示 2 小時內航班
         </button>
       </div>
 
@@ -235,7 +235,7 @@
         </thead>
         <tbody id="flight-list">
           <tr>
-            <td colspan="8" class="loading-cell">正在獲取最新航班與轉機安檢站資料...</td>
+            <td colspan="2" class="loading-cell">正在獲取最新航班與轉機安檢站資料...</td>
           </tr>
         </tbody>
       </table>
@@ -244,7 +244,7 @@
 
   <script>
     let rawFlightData = [];
-    let onlyEightHours = true; // 預設 8 小時篩選
+    let onlyEightHours = true; // 預設 2 小時篩選
 
     function getTodayDateStr() {
       const today = new Date();
@@ -340,7 +340,7 @@
       }
     }
 
-    // 檢查時間是否在 8 小時之內 (-15分鐘 ~ +480分鐘)
+    // 檢查時間是否在 2 小時之內 (-15分鐘 ~ +120分鐘)
     function isWithinEightHours(timeStr, updateTimeStr) {
       if (!timeStr && !updateTimeStr) return true;
 
@@ -353,15 +353,15 @@
       flightTime.setHours(parts[0], parts[1], 0, 0);
 
       const diffInMinutes = (flightTime - now) / (1000 * 60);
-      return diffInMinutes >= -15 && diffInMinutes <= 480;
+      return diffInMinutes >= -15 && diffInMinutes <= 120;
     }
 
     function toggleEightHourFilter() {
       onlyEightHours = !onlyEightHours;
-      const btn = document.getElementById('toggle-8h-btn');
+      const btn = document.getElementById('toggle-2h-btn');
       if (onlyEightHours) {
         btn.classList.add('active');
-        btn.innerText = '⏱️ 僅顯示 8 小時內航班';
+        btn.innerText = '⏱️ 僅顯示 2 小時內航班';
       } else {
         btn.classList.remove('active');
         btn.innerText = '顯示全天航班';
